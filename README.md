@@ -209,20 +209,22 @@ dx build --platform web --package badpiggies-editor-app --release --debug-symbol
 
 ## bpsim Mods
 
-This fork additionally carries the two bpsim Mods, kept byte-identical to the
-game repository at `Mods/`:
+This fork additionally carries the two bpsim Mods, which the game repository
+(`aeclic/bpsimF`) no longer tracks -- this repository is now their home:
 
 | Path | What it is |
 |---|---|
 | `Mods/LevelEditor/` | The in-game level editor Mod (`BpsimLevelEditor.dll`, `Mod.xml`, `Code/`, `Shaders/`, `Textures/`, `Web/`). The Rust editor pinned at `8697da72181ea1c7770c0b356c93d58678911e0a` is vendored under `Mods/LevelEditor/Web/badpiggies-editor/`; `Mods/LevelEditor/Web/bpsim/` is the companion adapter that drives it from inside the game. |
 | `Mods/FrameShapes/` | The BepInEx side of the bp-rebooted frame shapes Mod (`FrameShapesPlugin.cs`, `deploy.ps1`, `Tests/`). |
 
-`Mods/LevelEditor/Assets/` (the water asset bundle, 13 MB) and
-`Assets/Editor/LevelEditorModAssets/` (its staging folder) are build outputs and
-are not tracked here either: `Bpsim.EditorTools.LevelEditorModBuild` rebuilds
-them, and that script stays in the game project along with the
+`Mods/LevelEditor/Assets/` (the water asset bundle, 13 MB) is a build output and
+is not tracked here: `Bpsim.EditorTools.LevelEditorModBuild.BuildWaterAssets()`
+in the game project rebuilds it, staging the shaders and textures under that
+project's `Assets/Editor/LevelEditorModAssets/` first. The
 `Tools/LevelEditor/` generators (`sync_editor.py`, `extract_ultimate_water.py`,
-the port and compare scripts) that need the Unity editor to run.
+the port and compare scripts) also stay with the game project, because they
+drive the Unity editor. So the local loop is: clone this repository as `Mods/`
+inside a bpsimF checkout, then build from there.
 
 ### Licensing of the Mods
 

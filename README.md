@@ -207,6 +207,44 @@ dx build --platform web --package badpiggies-editor-app --release --debug-symbol
 | Scroll wheel | Zoom |
 | Middle/right/Alt/Space + drag | Pan |
 
+## bpsim Mods
+
+This fork additionally carries the two bpsim Mods, kept byte-identical to the
+game repository at `Mods/`:
+
+| Path | What it is |
+|---|---|
+| `Mods/LevelEditor/` | The in-game level editor Mod (`BpsimLevelEditor.dll`, `Mod.xml`, `Code/`, `Shaders/`, `Textures/`, `Web/`). The Rust editor pinned at `8697da72181ea1c7770c0b356c93d58678911e0a` is vendored under `Mods/LevelEditor/Web/badpiggies-editor/`; `Mods/LevelEditor/Web/bpsim/` is the companion adapter that drives it from inside the game. |
+| `Mods/FrameShapes/` | The BepInEx side of the bp-rebooted frame shapes Mod (`FrameShapesPlugin.cs`, `deploy.ps1`, `Tests/`). |
+
+`Mods/LevelEditor/Assets/` (the water asset bundle, 13 MB) and
+`Assets/Editor/LevelEditorModAssets/` (its staging folder) are build outputs and
+are not tracked here either: `Bpsim.EditorTools.LevelEditorModBuild` rebuilds
+them, and that script stays in the game project along with the
+`Tools/LevelEditor/` generators (`sync_editor.py`, `extract_ultimate_water.py`,
+the port and compare scripts) that need the Unity editor to run.
+
+### Licensing of the Mods
+
+The Mods carry the same license as the upstream editor they wrap:
+**AGPL-3.0-or-later**. `Mods/LevelEditor/ThirdParty/` keeps the upstream license
+and NOTICE (`BadPiggiesEditor.LICENSE`, `NOTICE.txt`) next to the pinned sources,
+and `THIRD-PARTY-LICENSES/` repeats the full texts for the repository root.
+
+- Bad Piggies Editor (`LambdaEd1th/badpiggies-editor`, revision `8697da72`):
+  AGPL-3.0-or-later. This fork does not modify the upstream WASM; the companion
+  adapter only observes the editor's canvas host and imports files through its
+  documented drag-and-drop path.
+- bp-rebooted (`Goggs77/bp-rebooted`): the upstream repository publishes no
+  license file, so `Mods/FrameShapes/` is redistributed here under the same
+  AGPL-3.0-or-later terms as the rest of this repository. Treat that as a
+  placeholder pending an explicit grant from the upstream author.
+- BepInEx 5.4.23.2 (`Mods/FrameShapes/Runtime/`): LGPL-2.1;
+  `THIRD-PARTY-LICENSES/BepInEx-LGPL-2.1.txt`. `deploy.ps1` re-downloads the
+  same release when the cached copy is absent.
+- Game assets remain the property of Rovio Entertainment and are not covered by
+  any of the above.
+
 ## License
 
 Licensed under the GNU Affero General Public License v3.0. Game assets remain

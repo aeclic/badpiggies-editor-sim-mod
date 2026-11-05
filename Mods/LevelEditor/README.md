@@ -73,6 +73,10 @@
 
 ## 重建
 
+下面这些命令与 `Bpsim.EditorTools.*` 方法都住在游戏工程（`aeclic/bpsimF`）里，不在本仓库：
+`Tools/LevelEditor/` 的生成器会读写 Unity 工程的 `Assets/`，`LevelEditorModBuild` 本身就是个 Editor 脚本。
+所以本地循环是——把本仓库 clone 成 bpsimF 检出目录下的 `Mods/`，然后在那个工程里：
+
 在项目 PowerShell 中：
 
 ```powershell
